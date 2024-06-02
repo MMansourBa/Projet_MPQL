@@ -419,7 +419,7 @@ if __name__ == "__main__":
     # Calculer le chemin critique
     projet.calculer_chemin_critique()
 
-    print("###########################")
+    print("#######################################")
     # Générer et afficher le rapport
     rapport = projet.generer_rapport_performance()
     print(rapport)

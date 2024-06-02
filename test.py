@@ -1,7 +1,14 @@
+"""
+Module de tests unitaires pour la classe Projet.
+
+Ce module contient des tests pour vérifier le bon
+fonctionnement de la classe Projet et ses interactions
+avec d'autres classes telles que Membre, Tache, Risque, et Jalon.
+"""
 import unittest
 from datetime import datetime
 
-from EmailNotificationStrategy import EmailNotificationStrategy
+# from EmailNotificationStrategy import EmailNotificationStrategy
 from Jalon import Jalon
 from Membre import Membre
 from Projet import Projet
@@ -11,7 +18,7 @@ from Tache import Tache
 
 class TestProjetMethods(unittest.TestCase):
     """
-    Test cases for the Projet class.
+    Classe Projet.
     """
 
     def setUp(self):
@@ -29,11 +36,13 @@ class TestProjetMethods(unittest.TestCase):
         )
 
         # Définir la stratégie de notification
-        self.email_strategy = EmailNotificationStrategy()
-        self.projet.set_notification_strategy(self.email_strategy)
+        # self.email_strategy = EmailNotificationStrategy()
+        # self.projet.set_notification_strategy(self.email_strategy)
+
         # Ajouter des membres
         self.projet.ajouter_membre_equipe(self.modou)
         self.projet.ajouter_membre_equipe(self.christian)
+
         # Ajouter des tâches
         self.tache1 = Tache(
             "Analyse des besoins",
@@ -98,7 +107,8 @@ class TestProjetMethods(unittest.TestCase):
         """
         self.assertEqual(len(self.projet.changements), 1)
         self.assertEqual(
-            self.projet.changements[0].description, "Changement de la portée du projet"
+            self.projet.changements[0].description,
+            "Changement de la portée du projet"
         )
         self.assertEqual(self.projet.version, 2)
 
@@ -113,8 +123,10 @@ class TestProjetMethods(unittest.TestCase):
         """
         Test générant le rapport de performance.
         """
-        rapport = self.projet.generer_rapport_performance()
-        self.assertIn("Rapport d'activités du Projet 'Nouveau Produit'", rapport)
+        rapport = (self.projet.
+                   generer_rapport_performance())
+        self.assertIn("Rapport d'activités du Projet "
+                      "'Nouveau Produit'", rapport)
         self.assertIn("Modou (Chef de projet)", rapport)
         self.assertIn("Christian (Développeur)", rapport)
         self.assertIn("Analyse des besoins", rapport)
