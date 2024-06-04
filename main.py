@@ -331,30 +331,37 @@ class Projet:
         """
         Calculer le chemin critique
         """
+
+        # Initialiser les temps au plus tôt (ES) et au plus tôt de fin (EF) pour chaque tâche
         for tache in self.taches:
             if not tache.dependances:
+                # Si la tâche n'a pas de dépendances, elle commence au début du projet
                 tache.es = self.date_debut
                 tache.ef = tache.es + timedelta(days=tache.duree())
             else:
+                # Si la tâche a des dépendances, son ES est le plus grand EF de ses dépendances
                 tache.es = max(dep.ef for dep in tache.dependances)
                 tache.ef = tache.es + timedelta(days=tache.duree())
 
-        # Initialiser LF pour la dernière tâche
+        # Déterminer la date de fin du projet (le plus grand EF de toutes les tâches)
         fin_projet = max(tache.ef for tache in self.taches)
+
+        # Initialiser les temps au plus tard (LF) et au plus tard de début (LS) pour la dernière tâche
         for tache in self.taches:
             if tache.ef == fin_projet:
                 tache.lf = tache.ef
                 tache.ls = tache.lf - timedelta(days=tache.duree())
 
-        # Calculer les temps au plus tard pour toutes les tâches
+        # Calculer les temps au plus tard (LF) et au plus tard de début (LS) pour toutes les tâches
         for tache in reversed(self.taches):
             if tache.lf is None:
+                # Si LF n'est pas déjà défini, il est le plus petit LS des tâches dépendantes
                 tache.lf = min(
                     dep.ls for dep in self.taches if tache in dep.dependances
                 )
                 tache.ls = tache.lf - timedelta(days=tache.duree())
 
-        # Déterminer le chemin critique
+        # Déterminer le chemin critique (les tâches où LF - EF = 0)
         self.chemin_critique = [
             tache for tache in self.taches if (tache.lf - tache.ef).days == 0
         ]
