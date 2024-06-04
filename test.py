@@ -8,7 +8,6 @@ avec d'autres classes telles que Membre, Tache, Risque, et Jalon.
 import unittest
 from datetime import datetime
 
-# from EmailNotificationStrategy import EmailNotificationStrategy
 from Jalon import Jalon
 from Membre import Membre
 from Projet import Projet
@@ -34,10 +33,6 @@ class TestProjetMethods(unittest.TestCase):
             datetime(2024, 12, 31),
             50000,
         )
-
-        # Définir la stratégie de notification
-        # self.email_strategy = EmailNotificationStrategy()
-        # self.projet.set_notification_strategy(self.email_strategy)
 
         # Ajouter des membres
         self.projet.ajouter_membre_equipe(self.modou)

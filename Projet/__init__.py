@@ -91,7 +91,6 @@ class Projet:
             else:
                 tache.ES = max(dep.EF for dep in tache.dependances)
                 tache.EF = tache.ES + timedelta(days=tache.duree())
-            # print(f"Tâche {tache.nom} : ES = {tache.ES}, EF = {tache.EF}")  # Débogage
 
         # Initialiser LF pour la dernière tâche
         fin_projet = max(tache.EF for tache in self.taches)
@@ -99,15 +98,12 @@ class Projet:
             if tache.EF == fin_projet:
                 tache.LF = tache.EF
                 tache.LS = tache.LF - timedelta(days=tache.duree())
-            # print(f"Tâche {tache.nom} initialisée pour LF/LS: LS = {tache.LS}, LF = {tache.LF}")  # Débogage
 
         # Calculer les temps au plus tard pour toutes les tâches
         for tache in reversed(self.taches):
             if tache.LF is None:
                 tache.LF = min(dep.LS for dep in self.taches if tache in dep.dependances)
                 tache.LS = tache.LF - timedelta(days=tache.duree())
-            # print(f"Tâche {tache.nom} : LS = {tache.LS}, LF = {tache.LF}")  # Débogage
 
         # Déterminer le chemin critique
         self.chemin_critique = [tache for tache in self.taches if (tache.LF - tache.EF).days == 0]
-        # print(f"Chemin critique: {[tache.nom for tache in self.chemin_critique]}")  # Débogage
