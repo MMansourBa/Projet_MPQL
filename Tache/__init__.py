@@ -14,10 +14,12 @@ class Tache:
         self.responsable = responsable
         self.statut = statut
         self.dependances: List['Tache'] = []
-        self.ES: Optional[datetime] = None
-        self.EF: Optional[datetime] = None
-        self.LS: Optional[datetime] = None
-        self.LF: Optional[datetime] = None
+        #Ajout des attributs supplementaires pour pouvoir
+        # calculer le chemin critique apres dans la classe Projet
+        self.ES: Optional[datetime] = None #Date de début au plus tôt
+        self.EF: Optional[datetime] = None #Date de fin au plus tôt
+        self.LS: Optional[datetime] = None #Date de début au plus tard
+        self.LF: Optional[datetime] = None #Date de fin au plus tard
 
     def ajouter_dependance(self, tache: 'Tache'):
         self.dependances.append(tache)

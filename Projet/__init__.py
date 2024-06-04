@@ -92,7 +92,7 @@ class Projet:
                 tache.ES = max(dep.EF for dep in tache.dependances)
                 tache.EF = tache.ES + timedelta(days=tache.duree())
 
-        # Initialiser LF pour la dernière tâche
+        # Initialiser la date du fin au plus tard pour la dernière tâche
         fin_projet = max(tache.EF for tache in self.taches)
         for tache in self.taches:
             if tache.EF == fin_projet:
